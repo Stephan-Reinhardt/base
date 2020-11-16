@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 
 
@@ -43,8 +44,7 @@ public class HttpRequestHandler {
     }
 
     public void read(ReadableByteChannel channel) throws IOException {
-        String raw = new RawRequestReader().readRaw(channel);
-        request = new HttpRequestParser().parse(raw);
+        request = new HttpRequestParser().parse(channel);
         LOGGER.info("Parsed incoming HTTP request: " + request);
 
         response = validateRequestTimeoutAndRateLimit();
@@ -68,6 +68,10 @@ public class HttpRequestHandler {
     public void write(WritableByteChannel channel) throws IOException {
         if (request == null) {
             throw new IllegalStateException("Request is not initialized");
+        }
+
+        if (Objects.equals(request.method, "post") || Objects.equals(request.method, "POST")){
+//            initJsonResponse
         }
 
         initFileResponse();

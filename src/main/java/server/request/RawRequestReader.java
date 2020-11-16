@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
-public final class RawRequestReader {
+public class RawRequestReader {
 
     private final int SOCKET_READ_BUFFER_SIZE_BYTES = 8192;
     private final int SOCKET_READ_DATA_LIMIT_BYTES = 32768;
 
     private final ByteBuffer readBuffer = ByteBuffer.allocate(SOCKET_READ_BUFFER_SIZE_BYTES);
 
-    public String readRaw(ReadableByteChannel channel) throws IOException {
+    protected String readRaw(ReadableByteChannel channel) throws IOException {
         StringBuilder sb = new StringBuilder();
         readBuffer.clear();
         int read;
