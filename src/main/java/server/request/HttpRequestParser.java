@@ -1,11 +1,13 @@
 package server.request;
 
 import java.io.IOException;
+import java.nio.channels.ReadableByteChannel;
 import java.util.StringTokenizer;
 
-public class HttpRequestParser {
+public class HttpRequestParser extends RawRequestReader{
 
-    public HttpRequest parse(String raw) throws IOException {
+    public HttpRequest parse(ReadableByteChannel channel) throws IOException {
+        String raw = readRaw(channel);
         try {
             StringTokenizer tokenizer = new StringTokenizer(raw);
             String method = tokenizer.nextToken().toUpperCase();

@@ -42,8 +42,8 @@ public class HttpStaticRequestHandler {
     }
 
     public void read(ReadableByteChannel channel) throws IOException {
-        String raw = new RawRequestReader().readRaw(channel);
-        request = new HttpRequestParser().parse(raw);
+//        String raw = new RawRequestReader().readRaw(channel);
+        request = new HttpRequestParser().parse(channel);
         LOGGER.info("Parsed incoming HTTP request: " + request);
 
         response = validateRequestTimeoutAndRateLimit();

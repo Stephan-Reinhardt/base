@@ -1,17 +1,20 @@
+import hardware.Hardware;
 import logger.Logger;
 import server.HttpServer;
-import server.ServerSettings;
 
-import java.util.Objects;
+import java.nio.file.Path;
 
 public class Start {
     private static final Logger LOGGER = new Logger(Start.class.getName());
 
-    public static void main(String[] args){
+    static void main(String[] args){
+        Hardware.load();
 
-        String staticContentFolder = Objects.requireNonNull(Start.class.getClassLoader().getResource("www")).getPath();
-        LOGGER.info("Starting server");
-        HttpServer server = new HttpServer(staticContentFolder);
-        new Thread(server, "http-server").start();
+//        Path p = Path.of("resources", "www");
+//        var t = p.toFile().exists();
+//        var x = p.toFile().getAbsolutePath();
+//        LOGGER.info("Starting server");
+//        HttpServer server = new HttpServer(x);
+//        new Thread(server, "http-server").start();
     }
 }
