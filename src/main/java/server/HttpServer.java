@@ -15,11 +15,12 @@ import java.util.Set;
 
 public final class HttpServer implements Runnable {
 
+    public static final int PORT = 9999;
     private final long SHUTDOWN_TIMEOUT_MILLIS = 10000L;
 
     private static final Logger LOGGER = new Logger(HttpServer.class.getName());
 
-    private final ServerSettings settings;
+    private final String staticContentFolder;
 
     private ServerSocketChannel serverChannel;
     private Selector selector;
@@ -27,8 +28,8 @@ public final class HttpServer implements Runnable {
     private int connectionsNum;
     private volatile long shutdownSignalTime = -1L;
 
-    public HttpServer(ServerSettings settings) {
-        this.settings = settings;
+    public HttpServer(String staticContentFolder) {
+        this.staticContentFolder = staticContentFolder;
     }
 
     @Override
@@ -47,7 +48,7 @@ public final class HttpServer implements Runnable {
         selector = Selector.open();
         serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
-        serverChannel.socket().bind(new InetSocketAddress((InetAddress) null, settings.getPort()));
+        serverChannel.socket().bind(new InetSocketAddress((InetAddress) null, PORT));
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
 
         // register a simple graceful shutdown hook
@@ -67,7 +68,7 @@ public final class HttpServer implements Runnable {
             }
         });
 
-        LOGGER.info("Server is now listening on port: " + settings.getPort());
+        LOGGER.info("Server is now listening on port: " + PORT);
     }
 
     private void stop() {
@@ -143,7 +144,7 @@ public final class HttpServer implements Runnable {
             connectionsNum++;
             LOGGER.info("Got new connection handler for channel: " + clientChannel
                     + ", connection #: " + connectionsNum);
-            handler = new HttpRequestHandler(settings, connectionsNum);
+            handler = new HttpRequestHandler(staticContentFolder, connectionsNum);
             key.attach(handler);
             return;
         }

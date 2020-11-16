@@ -1,7 +1,6 @@
 package server.handler;
 
 import logger.Logger;
-import server.ServerSettings;
 import server.fs.AsyncFileReaderImpl;
 import server.request.HttpRequest;
 import server.request.HttpRequestParser;
@@ -16,9 +15,9 @@ import java.nio.channels.WritableByteChannel;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-public class HttpRequestHandler {
+public class HttpStaticRequestHandler {
 
-    private static final Logger LOGGER = new Logger(HttpRequestHandler.class.getName());
+    private static final Logger LOGGER = new Logger(HttpStaticRequestHandler.class.getName());
     public static final int SESSION_TIMEOUT_MILLIS = 30 * 1000;
     private static final long maxConnectionsNum = 10000;
 
@@ -35,7 +34,7 @@ public class HttpRequestHandler {
     private final long creationTimeMillis;
     private final long connectionNum;
 
-    public HttpRequestHandler(String staticContentFolder, int connectionNum) {
+    public HttpStaticRequestHandler(String staticContentFolder, int connectionNum) {
         this.staticContentFolder = staticContentFolder;
         this.sessionTimeoutMillis = SESSION_TIMEOUT_MILLIS;
         this.creationTimeMillis = System.currentTimeMillis();

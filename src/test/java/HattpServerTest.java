@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class HattpServerTest {
 
-    private HttpServer server = new HttpServer();
+    private HttpServer server = new HttpServer("www");
 
     @Test
     public void testHttpServer(){

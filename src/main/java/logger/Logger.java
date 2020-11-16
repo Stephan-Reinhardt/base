@@ -2,7 +2,7 @@ package logger;
 
 public class Logger {
 
-    private String name;
+    private final String name;
 
     private final String ERROR_LEVEL = "error";
     private final String WARN_LEVEL = "warning";
