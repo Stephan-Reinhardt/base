@@ -1,6 +1,6 @@
 package server.request;
 
-public final class HttpRequest {
+public class HttpRequest {
 
     public final String method;
     public final String path;

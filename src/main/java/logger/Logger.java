@@ -35,7 +35,7 @@ public class Logger {
     }
 
     private String formatException(Throwable e){
-        return e.toString();
+        return e.getStackTrace()[0].getLineNumber() + e.toString();
     }
 
     private void print(String msg, String level){
